@@ -2,19 +2,20 @@ let camgraph
 let video
 let canvas;
 let track;
-let nowx=600;
-let nowy=300;
+//let nowx=600;
+//let nowy=300;
 let yesback=0;
 let stop=0; //to detect whether the track mode is on
 let istrack="Track On";
 let count="Solve Number:";
-let num=0;
-let max=10;
-let garbages= [];
+//let num=0;
+//let max=10;
+//let garbages= [];
 let randomlines_x=[];
 let randomlines_y=[];
 let myworm;
 let myfield;
+let mygarbage;
 let zoff=0.0;
 let addzoff=1;
 let boundary=50;
@@ -24,26 +25,65 @@ let boundary=50;
 
 class garbage{
   constructor(){
-    this.loc=createVector(random(100,width-100),random(100,height-100));
+    this.origin_loc=createVector(random(100,width-100),random(100,height-100));
     this.lifespan=255;
-    this.r=random(10,70);
+    this.r=random(10,30);
+    this.changev=1;
+    this.changea=0.005;
     this.dead=false;
+    this.add_loc=createVector(0,0);
+    this.loc_v=createVector(random(-0.5,0.5),random(-0.5,0.5));
+    this.loc=p5.Vector.add(this.origin_loc,this.add_loc);
+    this.freshyear=true;
+    this.freshlife=0;
   }
   update_killed(inx,iny){
-    if(this.dead==false){
+    if(this.dead==false && this.freshyear==false){
     if(abs(inx-this.loc.x)<this.r&&abs(iny-this.loc.y)<this.r){
         this.dead=true;
-        num++;
     }
     }
   }
   render(){
-    noStroke();
-    fill(255,this.lifespan);
+    this.update_killed(myworm.location.x,myworm.location.y);
+    if(this.isdead()!=true){
+    push();
+    if(this.freshyear==true){
+      strokeWeight(this.freshlife*this.r*this.changev/2000);
+      fill(144+addzoff*0.7,zoff+addzoff*0.5,zoff+addzoff,this.freshlife);
+    }
+    else{
+    strokeWeight(this.lifespan*this.r*this.changev/2000);
+    fill(144+addzoff*0.7,zoff+addzoff*0.5,zoff+addzoff,this.lifespan);
+    }
+    this.loc=p5.Vector.add(this.add_loc,this.origin_loc);
+    ellipse(this.loc.x,this.loc.y,this.r*this.changev,this.r*this.changev);
+    if(abs(this.add_loc.x)>50){
+      this.loc_v.x*=-1;
+    }
+    this.add_loc.x+=this.loc_v.x;
+    if(abs(this.add_loc.y)>50){
+      this.loc_v.y*=-1;
+    }
+    this.add_loc.y+=this.loc_v.y;
+    if(this.changev>=1.3||this.changev<=0.7){
+        this.changea*=-1;
+    }
+    this.changev+=this.changea
+    pop();
+    if(this.freshyear==true){
+    if(this.freshlife<250){
+      this.freshlife+=5;
+    }
+    else{
+      this.freshyear=false;
+      console.log("finish a new ball");
+    }
+  }
     if(this.dead==true){
       this.lifespan-=10;
     }
-    ellipse(this.loc.x,this.loc.y,this.r,this.r);
+  }
   }
   isdead(){
     if(this.lifespan<0){
@@ -55,6 +95,40 @@ class garbage{
   }
 }
 
+class garbagesystem{
+  constructor(){
+    this.max=10;
+    this.solvenum=0;
+    this.num=Math.floor(random(5,10));
+    this.garbages=[];
+    for(let i=0;i<this.num;i++){
+      this.garbages.push(new garbage());
+    }
+  }
+  update(){
+    for(let i=0;i<this.num;i++){
+      if(this.garbages[i].isdead()==true){
+        this.garbages.splice(i,1);
+        this.num--;
+        this.solvenum++;
+        this.reborn();
+        console.log("solve one!");
+      }
+    }
+    for(let i=0;i<this.num;i++){
+      this.garbages[i].render();
+    }
+  }
+  reborn(){
+     let add=Math.floor(random(0,this.max-this.num))+1;
+     //console.log(add);
+     for(let i=0;i<add;i++){
+       this.garbages.push(new garbage());
+       this.num++;
+     //  console.log("made new one!");
+     }
+  }
+}
 class yline{
   constructor(){
     this.x=random(0,canvas.width);
@@ -106,10 +180,13 @@ class fieldpoint{
   }
   check(myworm){
       let dis=p5.Vector.sub(this.origin_loc,myworm.location);
-      if(dis.mag()<60){
+      let checklength=myworm.segNum*myworm.segLength;
+      //console.log(checklength);
+      if(dis.mag()<checklength){
           this.add_loc=dis;
           this.add_loc.normalize();
-          let value=map(dis.mag(),0,60,10,0);
+          //let value=map(dis.mag(),0,checklength,10,0);
+          let value=20/dis.mag();
           this.add_loc.setMag(value);
       }
       else{
@@ -284,12 +361,6 @@ class worm{
 }
 
 function setup() {
- /*
-strokeWeight(19);
-stroke(205,51,51);
-*/
-
- // size(1280,720);
 //canvas=createCanvas(windowWidth,windowHeight);
 canvas=createCanvas(400,400);
  canvas.position(0,0);
@@ -300,12 +371,11 @@ canvas=createCanvas(400,400);
  //camgraph.id("captured_video");
 video=createGraphics(camgraph.width,camgraph.height);
   track=color(0,0,0);*/
-  //stroke(255,22);
-  textSize(18);
    frameRate(60);
   myworm=new worm();
   myfield=new fieldsystem();
   myfield.createfield();
+  mygarbage=new garbagesystem();
   /*let randomnum=Math.floor(random(1,10));
   for(let i=0;i<randomnum;i++){
     garbages.push(new garbage());
@@ -324,6 +394,7 @@ function draw() {
   //noisearea();
   randomlines();
   myfield.field(myworm);
+  mygarbage.update();
   //push();
   //translate(width,0);
   //scale(-1,1);
@@ -444,10 +515,11 @@ function drawmain(stop){
     }
 function showtext(){
   push();
+  textSize(18);
   noStroke();
   fill(0,102,153);
   text(istrack,10,10,150,50);
-   text(count+num,canvas.width-160,10,canvas.width-60,50);
+   text(count+mygarbage.solvenum,canvas.width-160,10,canvas.width-60,50);
    pop();
 }
 function noisearea(){
