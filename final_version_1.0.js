@@ -1,9 +1,7 @@
-
 let camgraph
 let video
 let canvas;
 let test;
-let track;
 let istrack="Track Off";
 let count="Solve Number:";
 let randomlines_x=[];
@@ -23,6 +21,7 @@ let recolor=false;
 let yesback=true;
 let stop=true; //to detect whether the track mode is on
 let trackloc;
+let track;
 let change_color=20;
 let gamemode=1;
 let coloroff=1;
@@ -421,7 +420,7 @@ class worm{   // the hero  小虫
   constructor(){
     this.v=createVector(random(-0.5*scale,0.5*scale),random(-0.5*scale,0.5*scale));
     this.a=createVector(random(-0.*scale,0.5*scale),random(-0.5*scale,0.5*scale));
-    this.location=createVector(random(0,canvas.width),random(0,canvas.height));
+    this.location=createVector(random(boundary,canvas.width-boundary),random(boundary,canvas.height-boundary));
     this.segNum=5;    //here to change the life of our hero 设置血量
     this.segLength=10*scale;
     this.x=[];
@@ -452,8 +451,11 @@ class worm{   // the hero  小虫
      else if(gamemode==3){
       let dis=p5.Vector.sub(trackloc,this.location);
       this.a=createVector(dis.x,dis.y);
-      this.a.setMag(random(scale,2*scale));
+      this.a.setMag(random(0.5*scale,1.5*scale));
       this.v.add(this.a);
+      if(this.v.mag()>8*scale){
+        this.v.setMag(8*scale);
+      }
       this.location.add(this.v);
       }
     }
@@ -635,7 +637,7 @@ class monster_static extends monster_base{ // basic static monster 方块绘制
     push();
     strokeWeight(scale*2);  //stroke of monster 方块的边
     stroke(130+110*sin(millis()/1000),0,0);
-    console.log(change_color);
+    //console.log(change_color);
   /*  colorMode(HSB,360,255,150);
     fill(1,175+50*sin(millis()/1000),70+20*sin(millis()/1000)); //color of monster 方块的颜色*/
     fill(225+25*sin(millis()/1000));
@@ -657,7 +659,6 @@ class monster_static extends monster_base{ // basic static monster 方块绘制
 }
 
 
-
 function reset(){
   myworm=new worm();
   mygarbage=new garbagesystem();
@@ -669,10 +670,6 @@ function reset(){
   solvenum=0;
   again=100;
   if(recolor==false){
-  trackloc=createVector(random(0,canvas.width),random(0,canvas.height));
-  let c=get(trackloc);
-  //track=color(Math.floor(random(0,255)),Math.floor(random(0,255)),Math.floor(random(0,255)));
-  track=color(red(c),green(c),blue(c));
  }
 }
 
@@ -688,6 +685,10 @@ function setup() {
   //track=color(0,0,0);
    frameRate(60);
   reset();
+  trackloc=createVector(random(0,canvas.width),random(0,canvas.height));
+  let c=get(trackloc);
+  //track=color(Math.floor(random(0,255)),Math.floor(random(0,255)),Math.floor(random(0,255)));
+  track=color(red(c),green(c),blue(c));
   smooth();
   pixelDensity(1);
 }
@@ -932,8 +933,26 @@ function findtrack(){
     let record=99999;
     video.loadPixels();
     let closest=createVector(random(0,video.width),random(0,video.height));
-    for(let i=0;i<video.width;i++){
-      for(let j=0;j<video.height;j++){
+
+    let x1=Math.floor(trackloc.x/(canvas.width/video.width)-video.width/5);
+    if(x1<0){
+      x1=0;
+    }
+    let x2=Math.floor(trackloc.x/(canvas.width/video.width)+video.width/5);
+    if(x2>video.width-1){
+      x2=video.width-1;
+    }
+    let y1=Math.floor(trackloc.y/(canvas.width/video.width)-video.height/5);
+    if(y1<0){
+      y1=0;
+    }
+    let y2=Math.floor(trackloc.y/(canvas.width/video.width)+video.height/5);
+    if(y2>video.height-1){
+      y2=video.height-1;
+    }
+    console.log(x1+","+x2+","+y1+","+y2);
+    for(let i=x1;i<x2;i++){
+      for(let j=y1;j<y2;j++){
         let id=4*(i+j*video.width);
         let r=video.pixels[id];
         let g=video.pixels[id+1];
@@ -946,7 +965,22 @@ function findtrack(){
         }
       }
     }
-    if(record<250){
+  /*  for(let i=0;i<video.width;i++){
+      for(let j=0;j<video.height;j++){
+        let id=4*(i+j*video.width);
+        let r=video.pixels[id];
+        let g=video.pixels[id+1];
+        let b=video.pixels[id+2];
+        let d=dist(r,g,b,red(track),green(track),blue(track));
+        if(d<record){
+          record=d;
+          closest.x=i;
+          closest.y=j;
+        }
+      }
+    }*/
+  //  console.log(record);
+    if(record<150){
      let newx=closest.x*(canvas.width/video.width);
      let newy=closest.y*(canvas.height/video.height);
      if(abs(trackloc.x-newx)<canvas.width/5 && abs(trackloc.y-newy)<canvas.height/5){
