@@ -1,3 +1,4 @@
+
 let camgraph
 let video
 let canvas;
@@ -457,8 +458,8 @@ class worm{   // the hero  小虫
       this.a=createVector(dis.x,dis.y);
       this.a.setMag(random(0.5*scale,1.5*scale));
       this.v.add(this.a);
-      if(this.v.mag()>8*scale){
-        this.v.setMag(8*scale);
+      if(this.v.mag()>15*scale){
+        this.v.setMag(15*scale);
       }
       this.location.add(this.v);
       }
@@ -739,7 +740,7 @@ class hand{
     this.v=createVector(0,0);
     this.a=p5.Vector.sub(trackloc,this.loc);
     this.amax=4*scale;
-    this.vmax=19*scale;
+    this.vmax=15*scale;
   }
   update(){
   /* this.a=p5.Vector.sub(trackloc,this.loc);
@@ -782,8 +783,9 @@ function reset(){
   solvenum=0;
   again=100;
   stop=true;
-  if(recolor==false){
- }
+  istrack="Track Off";
+ /* if(recolor==false){
+ }*/
 }
 
 function setup() {
@@ -857,7 +859,7 @@ function drawvideo(){
 
 function drawbackground(){
   if(drag==true){
-    background(change_color,30);
+    background(change_color,10);  //control delay
   }
   else if(drag==false){
     background(change_color);
@@ -1042,11 +1044,11 @@ function findtrack(){
     if(x2>video.width-1){
       x2=video.width-1;
     }
-    let y1=Math.floor(trackloc.y/(canvas.width/video.width)-video.height/5);
+    let y1=Math.floor(trackloc.y/(canvas.height/video.height)-video.height/5);
     if(y1<0){
       y1=0;
     }
-    let y2=Math.floor(trackloc.y/(canvas.width/video.width)+video.height/5);
+    let y2=Math.floor(trackloc.y/(canvas.height/video.height)+video.height/5);
     if(y2>video.height-1){
       y2=video.height-1;
     }
@@ -1090,3 +1092,4 @@ function findtrack(){
     }
   }
 }
+
