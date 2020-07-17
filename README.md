@@ -1,4 +1,7 @@
-A p5.js web game project.
+# A p5.js web game project.
+
+
+## Introduction 
 
 To run this ,make sure you have made p5 enviroment on your PC successfully, or
 you can try it on an online p5 editor.  Chorme is recommended to use here to run it.
@@ -27,7 +30,8 @@ Have fun! Enjoy!!
 
 
 
---------------------中文说明-----------------------------------
+##中文说明
+
 
 一个基于电脑摄像头捕捉颜色的小游戏。先通过电脑摄像头的画面捕捉一个颜色，
 然后通过现实中这个东西的移动控制蚯蚓移动，在避开矩形砖块的同时尽可能吃到
