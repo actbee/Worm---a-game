@@ -1,5 +1,6 @@
 # A p5.js web game project.
 
+![IMAGE](https://github.com/actbee/Worm---a-game/blob/master/photos/1.png?raw=true)
 
 ## Introduction 
 
@@ -26,11 +27,11 @@ P/p: pause the system
 
 Have fun! Enjoy!!
 
+![playing](https://github.com/actbee/Worm---a-game/blob/master/photos/2.png?raw=true)
+*Fig 1: while playing the game*
 
 
-
-
-##中文说明
+## 中文说明
 
 
 一个基于电脑摄像头捕捉颜色的小游戏。先通过电脑摄像头的画面捕捉一个颜色，
@@ -54,3 +55,6 @@ S/s:在游戏主界面显示摄像头画面
 F/f: 停止控制蚯蚓（蚯蚓自由移动）
 T/t: 控制蚯蚓
 P/p: 暂停游戏
+
+![hnu](https://github.com/actbee/Worm---a-game/blob/master/photos/3.png?raw=true)
+*Fig 2: user testing at HNU*
