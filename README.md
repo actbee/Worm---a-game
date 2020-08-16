@@ -27,7 +27,7 @@ P/p: pause the system
 
 Have fun! Enjoy!!
 
-Video: https://alioss.pinwall.design-engine.org/video/xSi2NMxFGQaeZ6AKw6wa.mp4?OSSAccessKeyId=LTAIsvXXw2cmRUG2&Expires=1594998708&Signature=uVmTVIS3EWWINA5kbHWrKu2dFiw%3D
+Video is [here](https://alioss.pinwall.design-engine.org/video/xSi2NMxFGQaeZ6AKw6wa.mp4?OSSAccessKeyId=LTAIsvXXw2cmRUG2&Expires=1594998708&Signature=uVmTVIS3EWWINA5kbHWrKu2dFiw%3D)
 
 ![playing](https://github.com/actbee/Worm---a-game/blob/master/photos/2.png?raw=true)
 
