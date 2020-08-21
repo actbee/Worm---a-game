@@ -802,7 +802,7 @@ function setup() {
   smooth();
   pixelDensity(1);
   trackloc=createVector(random(0,canvas.width),random(0,canvas.height));
-  let c=get(trackloc);
+  let c=get(trackloc.x,trackloc.y);
   //track=color(Math.floor(random(0,255)),Math.floor(random(0,255)),Math.floor(random(0,255)));
   track=color(red(c),green(c),blue(c));
   reset();

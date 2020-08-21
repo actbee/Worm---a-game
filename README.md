@@ -6,7 +6,7 @@
 
 To run this ,make sure you have made p5 enviroment on your PC successfully, or
 you can try it on an online p5 editor.  Chorme is recommended to use here to run it.
-I have uploaded one,here:
+I have uploaded one,![here](https://editor.p5js.org/actbee/sketches/b82q31jhI):
 https://editor.p5js.org/actbee/sketches/b82q31jhI
 
 Use light to lead the worm eating as more balls as possible, avoiding the 
@@ -27,7 +27,7 @@ P/p: pause the system
 
 Have fun! Enjoy!!
 
-Video is [here](https://alioss.pinwall.design-engine.org/video/xSi2NMxFGQaeZ6AKw6wa.mp4?OSSAccessKeyId=LTAIsvXXw2cmRUG2&Expires=1597573573&Signature=7YbrDOuKVPztWn%2BWLT4nOD5jbuo%3D )
+Video is [here](https://www.youtube.com/watch?v=pNTzOZt-dCI&feature=youtu.be )
 
 ![playing](https://github.com/actbee/Worm---a-game/blob/master/photos/2.png?raw=true)
 
