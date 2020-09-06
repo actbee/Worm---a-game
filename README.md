@@ -29,6 +29,8 @@ Have fun! Enjoy!!
 
 Video is [here](https://www.youtube.com/watch?v=pNTzOZt-dCI&feature=youtu.be )
 
+Also this project has been shared officially by p5.js group on [Instagram](https://www.instagram.com/p/CEtS8bAB5Sw/?utm_source=ig_web_button_share_sheet)!
+
 ![playing](https://github.com/actbee/Worm---a-game/blob/master/photos/2.png?raw=true)
 
 *Fig 1: while playing the game*
